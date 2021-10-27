@@ -1,6 +1,7 @@
 package easys
 
 import (
+	"errors"
 	"fmt"
 	"math"
 )
@@ -154,4 +155,32 @@ func helperToeplitzD2(m [][]int, i, j int, cache [][]int) bool {
 	}
 
 	return d2
+}
+
+func GetRelativePeak(peaks []int) (int, error) {
+	if len(peaks) < 3 {
+		return 0, errors.New("Array is too small")
+	}
+
+	start := 0
+	end := len(peaks) - 1
+	for end > start {
+		pivot := start + (end-start+1)/2
+
+        if peaks[pivot] > peaks[pivot-1] && peaks[pivot] > peaks[pivot+1] {
+			return peaks[pivot], nil
+		}
+
+        if pivot == 0 {
+            end = pivot
+        } else if pivot == len(peaks)-1 {
+            start = pivot
+        }else  if peaks[pivot-1] > peaks[pivot+1] {
+			end = pivot
+		} else {
+			start = pivot
+		}
+	}
+
+	return 0, errors.New("No peak found")
 }

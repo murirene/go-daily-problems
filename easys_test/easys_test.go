@@ -14,6 +14,13 @@ func TestAppleTrees(t *testing.T) {
 	}
 }
 
+func TestGetRelativePeak(t *testing.T){
+   peak, err := easys.GetRelativePeak([]int{1,4,5,2,10,2})
+   if peak != 5 && peak != 10 && err != nil {
+        t.Fatalf("%d is not a peak\n", peak)
+    }
+}
+
 func TestToeplitz(t *testing.T) {
 	m := [][]int{
 		{1, 2, 3, 4, 8},
